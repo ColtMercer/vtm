@@ -11,6 +11,20 @@ export function createApp(): express.Express {
   const app = express();
   app.use(express.json({ limit: '1mb' }));
 
+  app.get('/', (_request: Request, response: Response) => {
+    response.send(`
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>VTM</title>
+<style>body{font-family:monospace;background:#0d1117;color:#e6edf3;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}
+.box{text-align:center}h1{font-size:2rem;margin-bottom:.5rem}p{color:#8b949e;margin:.25rem 0}a{color:#58a6ff;text-decoration:none}a:hover{text-decoration:underline}</style>
+</head><body><div class="box">
+<h1>🔍 VTM</h1><p>Vulnerability Tracking Manager</p><br>
+<p><a href="/api/health">GET /api/health</a></p>
+<p><a href="#">POST /api/scan</a> — { repoUrl } or { repoPath }</p>
+<p><a href="#">GET /api/report/:scanId</a></p>
+<p><a href="#">POST /api/report/slack/:scanId</a></p>
+</div></body></html>`);
+  });
+
   app.get('/api/health', (_request: Request, response: Response) => {
     response.json({ status: 'ok' });
   });
